@@ -34,8 +34,13 @@ def field_change_func(inp):
     if inp in field_names_list:
         dict = {'a': 1, 'b': 2, 'c': 3}
         input_list = int(inp[1]), dict[inp[0]],
-        matrix[input_list[0]][input_list[1]]=xo_func()
-        display_func(matrix)
+        if matrix[input_list[0]][input_list[1]] == 'x' or matrix[input_list[0]][input_list[1]] == 'o':
+            print(f"This square is not empty. Add value to another square.")
+            print(f"Player{player}'s turn (add {par}):", end=" ")
+            field_change_func(input())
+        else:
+            matrix[input_list[0]][input_list[1]]=xo_func()
+            display_func(matrix)
     else:
         print(f"Incorrect value. Try again. Add parameter from this list: {field_names_list}")
         print(f"Plyaer{player}'s turn (add {par}):", end=" ")
@@ -47,7 +52,7 @@ def completion_check_func (matrix):
     global end_check
     for row in matrix:
         if row.count(par) == 3:
-            print(f'End of game. Player {player} is a winner')
+            print(f'End of game. Player {player} is a winner.')
             end_check=False
             break
         else:
@@ -74,6 +79,6 @@ def completion_check_func (matrix):
 
 display_func(matrix) #command that shows the initial xando filed
 while end_check:
-    print(f"Plyaer{player}'s turn (add {par}):", end=" ")
+    print(f"Plyaer {player}'s turn (add {par}):", end=" ")
     field_change_func(input())
     completion_check_func(matrix)
