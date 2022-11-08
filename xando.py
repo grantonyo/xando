@@ -1,3 +1,4 @@
+# Board
 matrix = [
     ['  ', 'a', 'b', 'c'],
     ['1|', '-', '-', '-'],
@@ -6,6 +7,7 @@ matrix = [
 ]
 
 
+# Function that displays board in terminal
 def display_func(mat):
     for row in mat:
         for element in row:
@@ -13,18 +15,20 @@ def display_func(mat):
         print()
 
 
-player = 1
-par = 'x'
-end_check = True
+player = 1  # var with player number (player 1 begins the game)
+par = 'x'  # var with 'x' or 'o' values (player 1 begins with 'x' in it's first turn
+end_check = True  # checks if the game ended ("False" value is assigned when board has no more empty fields)
 
 
-def xo_return_func():
+# Function that changes par value from 'x' to 'o' and from 'o' to 'x' in each next turn
+def xo_change_func():
     if par == 'x':
         return 'x'
     else:
         return 'o'
 
 
+# Function that changes player number in each next turn
 def player_change_func():
     global player
     global par
@@ -36,6 +40,8 @@ def player_change_func():
         par = 'x'
 
 
+# Function that adds 'x' and 'o' to the board upon the end of each turn with parameter check
+# (correctness of values added by the player) and cell status check (empty or not empty)
 def board_change_func(inp):
     field_names_list = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3']
     if inp in field_names_list:
@@ -43,20 +49,21 @@ def board_change_func(inp):
         input_list = int(inp[1]), valdict[inp[0]],
         if matrix[input_list[0]][input_list[1]] == 'x' or matrix[input_list[0]][input_list[1]] == 'o':
             print(f"This square is not empty. Add value to another square.")
-            print(f"Player{player}'s turn (add {par}):", end=" ")
-            board_change_func(input())   # Todo: To decorate this functon
+            print(f"Player {player}'s turn (add {par}):", end=" ") #Todo: to decorate
+            board_change_func(input())
         else:
-            matrix[input_list[0]][input_list[1]] = xo_return_func()
+            matrix[input_list[0]][input_list[1]] = xo_change_func()  # adds 'x' or 'o' to the board
             display_func(matrix)
     else:
         print(f"Incorrect value. Try again. Add parameter from this list: {field_names_list}")
-        print(f"Plyaer{player}'s turn (add {par}):", end=" ")
-        board_change_func(input())   # Todo: To decorate this functon
+        print(f"Player {player}'s turn (add {par}):", end=" ")
+        board_change_func(input())  #Todo: to decorate
 
 
+# Function that checks and identifies end of the game
 def completion_check_func(mat):
-    col1, col2, col3 = [], [], [],
-    dgnl1, dgnl2 = [], []
+    col1, col2, col3 = [], [], []  # var needed to check three 'x's or 'o's in a row
+    dgnl1, dgnl2 = [], []  # var needed to check three 'x's or 'o's in diagonals
     cnt1, cnt2, cnt3 = 0, 3, 0
     global end_check
     for row in mat:
@@ -87,8 +94,9 @@ def completion_check_func(mat):
         player_change_func()
 
 
-display_func(matrix)  # command that shows the initial xando board
+# game engine as such is in 5 lines below:
+display_func(matrix)  # command that shows the initial board
 while end_check:
     print(f"Player {player}'s turn (add {par}):", end=" ")
-    board_change_func(input())   # Todo: To decorate this functon
+    board_change_func(input())  # Todo: To decorate
     completion_check_func(matrix)
