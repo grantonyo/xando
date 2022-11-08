@@ -49,7 +49,7 @@ def board_change_func(inp):
         input_list = int(inp[1]), valdict[inp[0]],
         if matrix[input_list[0]][input_list[1]] == 'x' or matrix[input_list[0]][input_list[1]] == 'o':
             print(f"This square is not empty. Add value to another square.")
-            print(f"Player {player}'s turn (add {par}):", end=" ") #Todo: to decorate
+            print(f"Player {player}'s turn (add {par}):", end=" ")
             board_change_func(input())
         else:
             matrix[input_list[0]][input_list[1]] = xo_change_func()  # adds 'x' or 'o' to the board
@@ -57,14 +57,14 @@ def board_change_func(inp):
     else:
         print(f"Incorrect value. Try again. Add parameter from this list: {field_names_list}")
         print(f"Player {player}'s turn (add {par}):", end=" ")
-        board_change_func(input())  #Todo: to decorate
+        board_change_func(input())
 
 
 # Function that checks and identifies end of the game
 def completion_check_func(mat):
-    col1, col2, col3 = [], [], []  # var needed to check three 'x's or 'o's in a row
+    col1, col2, col3 = [], [], []  # vars needed to check three 'x's or 'o's in columns
     dgnl1, dgnl2 = [], []  # var needed to check three 'x's or 'o's in diagonals
-    cnt1, cnt2, cnt3 = 0, 3, 0
+    cnt1, cnt2, cnt3 = 0, 3, 0  # support vars
     global end_check
     for row in mat:
         if row.count(par) == 3:
@@ -77,8 +77,9 @@ def completion_check_func(mat):
             col3.append(row[3])
             dgnl1.append(row[cnt1])
             cnt1 += 1
-            dgnl2.append(row[cnt2])
-            cnt2 -= 1
+            if row[0] != "  ":
+                dgnl2.append(row[cnt2])
+                cnt2 -= 1
             if row.count("-") == 0:
                 cnt3 += 1
     if col1.count(par) == 3 or col2.count(par) == 3 or col3.count(par) == 3:
@@ -97,6 +98,6 @@ def completion_check_func(mat):
 # game engine as such is in 5 lines below:
 display_func(matrix)  # command that shows the initial board
 while end_check:
-    print(f"Player {player}'s turn (add {par}):", end=" ")
-    board_change_func(input())  # Todo: To decorate
-    completion_check_func(matrix)
+    print(f"Player {player}'s turn (add {par}):", end=" ")  # info about the current turn
+    board_change_func(input())  # takes input from player and updates the board accordingly
+    completion_check_func(matrix)  # checks game status and stops the game when ended
