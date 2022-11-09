@@ -1,4 +1,4 @@
-# xando
+# xando (tic-tac-toe)
 
 ## General
 This is a tic-tac-toe console game.
